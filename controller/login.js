@@ -11,12 +11,12 @@ async function login(ctx) {
     user_id: 3320,
     nikename:'正式2'
   }
-  const token = jwt.sign(userToken, secret, {expiresIn: '6h'})  //token签名 有效期为1小时
+  const token = jwt.sign(userToken, secret, { expiresIn: '6h' })  // token签名 有效期为1小时
 
   ctx.body = {
     code: 0,
     message: 'token获取成功',
-    token:token
+    token: token
   }
 
 }

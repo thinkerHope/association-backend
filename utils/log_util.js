@@ -38,9 +38,9 @@ log4js.configure({
 /**
  * 格式化输出
  */
-export let logger = {};
-let errorLogger = log4js.getLogger('error')
-let resLogger = log4js.getLogger('response')
+export const logger = {};
+const errorLogger = log4js.getLogger('error')
+const resLogger = log4js.getLogger('response')
 
 // 封装错误日志
 logger.errLogger = (ctx, error, resTime) => {
@@ -58,8 +58,7 @@ logger.resLogger = (ctx, resTime) => {
 /**
  * 日志输出格式
  */
-let formatError = (ctx, err,costTime) => {
-  // console.log('>>>>>>>>>>>>>',ctx)
+const formatError = (ctx, err,costTime) => {
   let method = ctx.method
   let url = ctx.url
   let header = ctx.header
@@ -68,8 +67,8 @@ let formatError = (ctx, err,costTime) => {
   let userAgent = ctx.header.userAgent
   return {method, url, header, body, response, costTime, err}
 }
-let formatRes = (ctx,costTime) => {
-  // console.log('>>>>>>>>>>>>>',ctx)
+
+const formatRes = (ctx, costTime) => {
   let method = ctx.method
   let url = ctx.url
   let header = ctx.header

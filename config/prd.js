@@ -1,10 +1,10 @@
 export default{
   mysql: {
-    database: 'xx',
-    username: 'xx',
-    password: 'xx',
+    database: 'association',
+    username: 'root',
+    password: 'zrr_215888',
     params: {
-      host: 'localhost',
+      host: '127.0.0.1',
       port:'3306',
       dialect: 'mysql',
       define: {

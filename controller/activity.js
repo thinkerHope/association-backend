@@ -1,8 +1,8 @@
 import { models } from '../models/index'
 
-const User = models.user;
+const Activity = models.user;
 
-async function userList(ctx) {
+async function search(ctx) {
   // console.log(ctx.request)
   var userList = await User.findAll();
   ctx.body = {
@@ -16,5 +16,5 @@ async function userList(ctx) {
 
 
 export default {
-  userList,
+  search,
 }
