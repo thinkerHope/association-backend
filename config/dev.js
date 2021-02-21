@@ -1,5 +1,5 @@
 
-export default{
+export default {
   mysql: {
     database: 'association',
     username: 'root',
@@ -22,5 +22,11 @@ export default{
         idle: 30000
       }
     },
+  },
+  redis: {
+    host: '127.0.0.1',
+    port: 6379,
+    password: '123456',
+    no_ready_check: true,
   },
 }

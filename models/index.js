@@ -1,4 +1,4 @@
-import sequelize from '../config/db';
+import sequelize from '../service/db';
 
 // 引入表结构
 const user = sequelize.import('./user.js'); 

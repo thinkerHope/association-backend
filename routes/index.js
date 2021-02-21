@@ -21,8 +21,7 @@ router.post('/login', login.login)
 // 社团
 router.get('/association/getAll', association.getAll)
 
-router
-  .post('/upload', uploadConfig.single('file'), upload.upload)
-  .post('/userList', user.userList)
+// 文件上传
+router.post('/upload', uploadConfig.single('file'), upload.upload)
 
 module.exports = router

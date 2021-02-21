@@ -35,6 +35,7 @@
     "mysql2": "^1.6.4",
     "path": "^0.12.7",
     "pug": "^2.0.0-rc.1",
+    "redis": "^3.0.2",
     "sequelize": "^4.41.2"
   },
   "devDependencies": {
