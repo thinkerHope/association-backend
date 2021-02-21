@@ -10,7 +10,7 @@ const { appid, appSecret } = wxconfig;
 const REDIS_EXPIRES = 1 * 3600;
 
 async function login(ctx) {
-  const { code } = ctx.body
+  const { code } = ctx.request.body
   const skeyRes = await get3rdSkey(code, appid, appSecret);
   const { skey, openid ,session_key } = skeyRes
   if (skey) {

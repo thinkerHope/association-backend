@@ -18,8 +18,8 @@ async function getSessionKey (code, appid, appSecret) {
 			grant_type: 'authorization_code'
 		}
 	});
-	console.log('getSessionKey res ========>', res);
-	return res;
+	console.log('getSessionKey res ========>', res.data);
+	return res.data;
 }
 
 async function get3rdSkey(code, appid, appSecret) {
