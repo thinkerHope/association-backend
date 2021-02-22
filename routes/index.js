@@ -2,7 +2,7 @@ const router = require('koa-router')()
 
 import {intercept} from '../utils/intercept'
 // 引入controller
-import {uploadConfig} from '../controller/uploads'
+import {uploadConfig} from '../utils/uploads'
 
 import login from '../controller/login'
 import upload from '../controller/upload'
@@ -22,6 +22,6 @@ router.post('/login', login.login)
 router.get('/association/getAll', association.getAll)
 
 // 文件上传
-router.post('/upload', uploadConfig.single('file'), upload.upload)
+router.post('/upload/:type', uploadConfig.single('file'), upload.upload)
 
 module.exports = router

@@ -6,7 +6,7 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 // log
 const logger = require('koa-logger')
-import {logger as log4js} from './utils/log_util'
+import {logger as log4js} from './utils/log'
 
 const cors = require('koa2-cors')
 
@@ -30,6 +30,8 @@ app.use(session(app))
 // 日志
 app.use(logger())
 
+// 托管静态资源
+// 前端即可直接通过 http://localhost:3001(域名)/文件名 访问（注意: 不需要/public）
 app.use(require('koa-static')(__dirname + '/public'))
 
 app.use(views(__dirname + '/views', {
