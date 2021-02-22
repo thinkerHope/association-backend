@@ -2,9 +2,9 @@ import { models } from '../models/index'
 
 const User = models.user;
 
-async function userList(ctx) {
-  // console.log(ctx.request)
-  var userList = await User.findAll();
+async function get(ctx) {
+  // ctx.request.body
+  const userList = await User.findAll();
   ctx.body = {
     code:0,
     data:{
@@ -14,7 +14,11 @@ async function userList(ctx) {
   }
 }
 
+async function update(ctx) {
+
+}
 
 export default {
-  userList,
+  get,
+  update,
 }
