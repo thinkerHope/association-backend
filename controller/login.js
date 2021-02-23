@@ -21,7 +21,8 @@ async function login(ctx) {
       ctx.body = {
         retcode: 0,
         data: {
-          key: skeyRes.skey
+          userid: openid,
+          skey: skeyRes.skey
         }
       }
     } else {

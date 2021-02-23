@@ -2,8 +2,8 @@
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('user', {
-    user_id: {
-      type: DataTypes.INTEGER(11).UNSIGNED,
+    userid: {
+      type: DataTypes.STRING,
       allowNull: false,
       primaryKey: true
     },
@@ -12,14 +12,13 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       unique: false,
     },
-    class: {
+    userclass: {
       type: DataTypes.INTEGER,
       allowNull: false,
       unique: false,
     },
     phone: {
       type: DataTypes.STRING,
-      allowNull: false,
       unique: false,
     },
     sno: {
@@ -34,17 +33,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     joinedAssociations: {
       type: DataTypes.STRING,
-      allowNull: false,
       unique: false,
     },
-    identity: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      unique: false,
-    },
+    // 0-男生 1-女生
     gender: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
+      type: DataTypes.TINYINT(2),
       unique: false,
     },
     avatar: {
@@ -53,7 +46,6 @@ module.exports = function(sequelize, DataTypes) {
     },
     joinedActivities: {
       type: DataTypes.STRING,
-      allowNull: false,
       unique: false,
     },
     birth: {
@@ -64,16 +56,22 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       unique: false,
     },
-    create_time: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
+    // 信息是否完善, 0-完善，1-待完善
+    // TINYINT(2)
+    isInfoComplete: {
+      type: DataTypes.TINYINT(2),
       unique: false,
     },
-    update_time: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
+    create_time: {
+			type: DataTypes.BIGINT,
+			allowNull: false,
       unique: false,
-    }
+		},
+		update_time: {
+			type: DataTypes.BIGINT,
+			allowNull: false,
+      unique: false,
+		}
   }, {
     tableName: 'user'
   });
