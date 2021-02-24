@@ -2,7 +2,6 @@
 import fs from 'fs'
 import { nameRule } from '../middleware/uploads'
 import { models } from '../models/index'
-import path from 'path'
 
 const User = models.user;
 
@@ -21,7 +20,7 @@ async function upload(ctx) {
   });
 
   const dbData = { avatar: `/${url}`, userid }
-  console.log('[user] exists =====>', exists)
+
   if (exists) {
     await User.update(dbData, {
       where: {

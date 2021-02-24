@@ -3,15 +3,27 @@ import { models } from '../models/index'
 const User = models.user;
 
 async function get(ctx) {
-  // ctx.request.body
-  const userList = await User.findAll();
-  ctx.body = {
-    code:0,
-    data:{
-      'userList': userList,
+  console.log(ctx.query)
+  const exists = await User.findOne({
+    where: {
+      userid
     },
-    msg:'成功'
+  });
+
+  if (exists) {
+    return ctx.body = {
+      retcode: 0,
+      data: {
+        
+      },
+    }
+  } else {
+    ctx.body = {
+      retcode: -1,
+      message: '用户不存在'
+    }
   }
+  
 }
 
 async function update(ctx) {
@@ -43,7 +55,6 @@ async function update(ctx) {
       break;
   }
   const now = new Date()
-  console.log('exists====',exists)
   if (exists) {
     dbData.update_time = now
     await User.update({

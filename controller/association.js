@@ -1,6 +1,8 @@
 import { models } from '../models/index'
+import { nameRule } from '../middleware/uploads'
 
 const Association = models.association;
+const User = models.user;
 
 async function get(ctx) {
   // console.log(ctx.request)
@@ -8,7 +10,7 @@ async function get(ctx) {
   ctx.body = {
     retcode: 0,
     data: {
-      
+			
     },
   }
 }
@@ -94,8 +96,66 @@ async function getAll(ctx) {
 	}
 }
 
+async function create(ctx) {
+	const UID = require('uuid').v1()
+	const { 
+		userid = '',
+		association_name, 
+		association_desc, 
+		association_type, 
+		association_academy, 
+		association_qq, 
+	} = ctx.req.body;
+	const url = nameRule() + ctx.req.file.filename;
+	const now = new Date()
+	const dbData = {
+		associationid: UID,
+		name: association_name,
+		type: association_type,
+		academy: association_academy,
+		qq: association_qq,
+		// identity: 0-创建者（默认社长，权限最高）1-普通干事
+		members: JSON.stringify([{ userid, identity: 0 }]),
+		desc: association_desc,
+		logo: url,
+		create_time: now,
+		update_time: now,
+	}
+
+	const exists = await Association.findOne({
+    where: {
+      name: association_name,
+    },
+	});
+
+	if (exists) {
+		return ctx.body = {
+			retcode: '-1',
+			message: '该社团名已被占用'
+		}
+	}
+
+	const associationInfo = await Association.create(dbData);
+	const joinedAssociations = JSON.stringify({ associationid: associationInfo.associationid })
+	if (associationInfo) {
+		User.update({ 
+			joinedAssociations,
+		}, {
+			where: {
+				userid
+			}
+		});
+	}
+
+	
+	ctx.body = {
+    retcode: 0,
+    data: associationInfo,
+  }
+}
 
 export default {
   get,
-  getAll
+	getAll,
+	create,
 }
