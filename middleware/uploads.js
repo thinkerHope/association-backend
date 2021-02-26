@@ -5,10 +5,8 @@ import path from 'path'
 // 文件上传配置
 // 文件夹名称（日期）
 const dirDate = new Date().toJSON().substr(0, 10).replace(/[-T]/g, '');
-let _dirname = ''
 // 加载配置
 export const uploadConfig = (dirname) => {
-  _dirname = dirname
   return multer({ 
     storage: multer.diskStorage({
       // 文件保存路径
@@ -23,4 +21,4 @@ export const uploadConfig = (dirname) => {
 }
 
 // 文件命名规则
-export const nameRule = () => `uploads/${_dirname}/${dirDate}/`
+export const nameRule = (name) => `uploads/${name}/${dirDate}/`

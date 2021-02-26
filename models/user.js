@@ -5,7 +5,8 @@ module.exports = function(sequelize, DataTypes) {
     userid: {
       type: DataTypes.STRING,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      unique: true,
     },
     username: {
       type: DataTypes.STRING,
@@ -13,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
       unique: false,
     },
     userclass: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
       unique: false,
     },
@@ -24,7 +25,7 @@ module.exports = function(sequelize, DataTypes) {
     sno: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: false,
+      unique: true,
     },
     academy: {
       type: DataTypes.STRING,
@@ -62,17 +63,9 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TINYINT(2),
       unique: false,
     },
-    create_time: {
-			type: DataTypes.BIGINT,
-			allowNull: false,
-      unique: false,
-		},
-		update_time: {
-			type: DataTypes.BIGINT,
-			allowNull: false,
-      unique: false,
-		}
   }, {
-    tableName: 'user'
+    tableName: 'user',
+    timestamps: true,
+		underscored: true,
   });
 };

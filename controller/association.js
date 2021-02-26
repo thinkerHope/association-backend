@@ -6,11 +6,18 @@ const User = models.user;
 
 async function get(ctx) {
   // console.log(ctx.request)
-  const associationList = await Association.findAll();
+	const { userid } = ctx.request.body;
+	const user = await User.findOne({
+		where: {
+			userid
+		}
+	})
+	const associations = await user.getAssociations();
+
   ctx.body = {
     retcode: 0,
     data: {
-			
+			associations: associations.map(i => i.dataValues)
     },
   }
 }
@@ -106,20 +113,16 @@ async function create(ctx) {
 		association_academy, 
 		association_qq, 
 	} = ctx.req.body;
-	const url = nameRule() + ctx.req.file.filename;
-	const now = new Date()
+	const url = nameRule('association') + ctx.req.file.filename;
+
 	const dbData = {
-		associationid: UID,
+		id: UID,
 		name: association_name,
 		type: association_type,
 		academy: association_academy,
 		qq: association_qq,
-		// identity: 0-创建者（默认社长，权限最高）1-普通干事
-		members: JSON.stringify([{ userid, identity: 0 }]),
 		desc: association_desc,
-		logo: url,
-		create_time: now,
-		update_time: now,
+		logo: `http://localhost:3001/${url}`,
 	}
 
 	const exists = await Association.findOne({
@@ -131,26 +134,21 @@ async function create(ctx) {
 	if (exists) {
 		return ctx.body = {
 			retcode: '-1',
-			message: '该社团名已被占用'
+			message:  `association ${association_name} already exists`
 		}
 	}
 
-	const associationInfo = await Association.create(dbData);
-	const joinedAssociations = JSON.stringify({ associationid: associationInfo.associationid })
-	if (associationInfo) {
-		User.update({ 
-			joinedAssociations,
-		}, {
-			where: {
-				userid
-			}
-		});
-	}
-
+	const creator = await User.findOne({
+    where: {
+      userid,
+    },
+	});
+	const AssociationCreated = await Association.create(dbData);
+	await AssociationCreated.addUser(creator, { through: { identity: 0 }});
 	
 	ctx.body = {
     retcode: 0,
-    data: associationInfo,
+    data: AssociationCreated.dataValues,
   }
 }
 

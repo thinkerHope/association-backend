@@ -9,7 +9,7 @@ const User = models.user;
 async function upload(ctx) {
   const { type } = ctx.params;
   const { userid = '' } = ctx.req.body;
-  const url = nameRule() + ctx.req.file.filename;
+  const url = nameRule('user') + ctx.req.file.filename;
   // (若上一步需上传阿里等图床时需要读取本地文件)上传后  是否成功  删除文件
   // fs.unlinkSync(url);
   // 补全用户信息

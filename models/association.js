@@ -1,8 +1,8 @@
 /* jshint indent: 2 */
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define('association', {
-		associationid: {
-			type: DataTypes.INTEGER(11).UNSIGNED,
+		id: {
+			type: DataTypes.STRING,
 			allowNull: false,
 			primaryKey: true,
 			unique: true,
@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
 		name: {
 			type: DataTypes.STRING,
 			allowNull: false,
-      unique: false,
+      unique: true,
 		},
 		type: {
 			type: DataTypes.STRING,
@@ -25,12 +25,7 @@ module.exports = function(sequelize, DataTypes) {
 		qq: {
 			type: DataTypes.STRING,
 			allowNull: false,
-      unique: false,
-		},
-		members: {
-			type: DataTypes.STRING,
-			allowNull: false,
-      unique: false,
+			unique: true,
 		},
 		logo: {
 			type: DataTypes.STRING,
@@ -46,18 +41,10 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.STRING,
       unique: false,
 		},
-		create_time: {
-			type: DataTypes.BIGINT,
-			allowNull: false,
-      unique: false,
-		},
-		update_time: {
-			type: DataTypes.BIGINT,
-			allowNull: false,
-      unique: false,
-		}
 	}, {
-		tableName: 'association'
+		tableName: 'association',
+		timestamps: true,
+		underscored: true,
 	});
 };
   

@@ -3,7 +3,6 @@ import { models } from '../models/index'
 const User = models.user;
 
 async function get(ctx) {
-  console.log(ctx.query)
   const exists = await User.findOne({
     where: {
       userid
@@ -54,12 +53,9 @@ async function update(ctx) {
     default:
       break;
   }
-  const now = new Date()
+
   if (exists) {
-    dbData.update_time = now
-    await User.update({
-      ...dbData
-    }, {
+    await User.update(dbData, {
       where: {
         userid
       },
@@ -75,11 +71,7 @@ async function update(ctx) {
       message: '信息更新成功',
     }
   } else {
-    userInfo = await User.create({
-      ...dbData,
-      create_time: now,
-      update_time: now
-    });
+    userInfo = await User.create(dbData);
   }
 
   ctx.body = {

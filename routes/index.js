@@ -23,13 +23,12 @@ router.post('/login', login.login)
 
 // 社团
 router.get('/association/getAll', association.getAll)
-router.post('/association/create', uploadConfig('assciation').single('file'), association.create)
+router.post('/association/get', association.get)
+router.post('/association/create', uploadConfig('association').single('file'), association.create)
 
 // 学生
 router.get('/user/get', loginConfig.loginCheck, user.get)
 router.post('/user/update/:type', loginConfig.loginCheck, user.update)
-
-// 文件上传
 router.post('/upload/:type', uploadConfig('user').single('file'), upload.upload)
 
 module.exports = router

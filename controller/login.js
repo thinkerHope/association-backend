@@ -9,7 +9,7 @@ const User = models.user;
 
 const { appid, appSecret } = wxconfig;
 
-const REDIS_EXPIRES = 1 * 3600;
+const REDIS_EXPIRES = 2 * 10 * 3600;
 
 async function login(ctx) {
   const { code } = ctx.request.body
