@@ -25,6 +25,7 @@ router.post('/login', login.login)
 router.get('/association/getAll', association.getAll)
 router.post('/association/get', association.get)
 router.post('/association/create', uploadConfig('association').single('file'), association.create)
+router.post('/association/getOne', association.getOne)
 
 // 学生
 router.get('/user/get', loginConfig.loginCheck, user.get)

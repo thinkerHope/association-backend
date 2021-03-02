@@ -1,8 +1,13 @@
 import { models } from '../models/index'
 import { nameRule } from '../middleware/uploads'
+import Sequelize from 'sequelize'
+
+const Op = Sequelize.Op;
 
 const Association = models.association;
 const User = models.user;
+
+const baseUrl = 'http://localhost:3001';
 
 async function get(ctx) {
   // console.log(ctx.request)
@@ -20,6 +25,42 @@ async function get(ctx) {
 			associations: associations.map(i => i.dataValues)
     },
   }
+}
+
+async function getOne(ctx) {
+	const { userid, name } = ctx.request.body;
+
+	if (!userid || !name) {
+		return ctx.body = {
+			retcode: -1,
+			message: '参数缺失'
+		}
+	}
+	const user = await User.findOne({
+		where: {
+			userid
+		}
+	})
+	const res = await user.getAssociations({
+		where: {
+			name: {
+				[Op.eq]: name
+			}
+		}
+	})
+	if (res && res.length) {
+		ctx.body = {
+			retcode: 0,
+			data: {
+				...res[0].dataValues
+			},
+		}
+	} else {
+		ctx.body = {
+			retcode: -1,
+			message: '社团不存在'
+		}
+	}	
 }
 
 async function getAll(ctx) {
@@ -122,7 +163,7 @@ async function create(ctx) {
 		academy: association_academy,
 		qq: association_qq,
 		desc: association_desc,
-		logo: `http://localhost:3001/${url}`,
+		logo: `${baseUrl}/${url}`,
 	}
 
 	const exists = await Association.findOne({
@@ -134,7 +175,7 @@ async function create(ctx) {
 	if (exists) {
 		return ctx.body = {
 			retcode: '-1',
-			message:  `association ${association_name} already exists`
+			message: `association ${association_name} already exists`
 		}
 	}
 
@@ -155,5 +196,7 @@ async function create(ctx) {
 export default {
   get,
 	getAll,
+	getOne,
 	create,
 }
+
