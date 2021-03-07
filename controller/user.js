@@ -1,4 +1,5 @@
 import { models } from '../models/index'
+const { Op } = require("sequelize");
 
 const User = models.user;
 
@@ -28,6 +29,20 @@ async function get(ctx) {
 async function update(ctx) {
   const { userid, userclass, username, sno, academy } = ctx.request.body;
   const { type } = ctx.params;
+
+  const UserSno = User.findOne({
+    where: {
+      sno,
+      [Op.not]: { userid }
+    }
+  })
+
+  if (UserSno) {
+    return ctx.body = {
+      retcode: '-1',
+      message: '该学号已注册'
+    }
+  }
 
   const exists = await User.findOne({
     where: {
