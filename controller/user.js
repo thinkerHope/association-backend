@@ -1,5 +1,7 @@
 import { models } from '../models/index'
-const { Op } = require("sequelize");
+import Sequelize from 'sequelize'
+
+const Op = Sequelize.Op;
 
 const User = models.user;
 
@@ -30,7 +32,7 @@ async function update(ctx) {
   const { userid, userclass, username, sno, academy } = ctx.request.body;
   const { type } = ctx.params;
 
-  const UserSno = User.findOne({
+  const UserSno = await User.findOne({
     where: {
       sno,
       [Op.not]: { userid }

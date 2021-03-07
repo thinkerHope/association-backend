@@ -18,6 +18,7 @@ async function upload(ctx) {
       userid
     },
   });
+  console.log('exists===>', exists)
 
   const dbData = { avatar: `/${url}`, userid }
 

@@ -117,29 +117,27 @@ async function getAll(ctx) {
 		},
 	]
 
-	await Promise.all(
+	const result = await Promise.all(
 		types.map(async item => {
 			const { type } = item
-			Association.findAll({
+			const assos = await Association.findAll({
 				where: {
 					type
 				}
 			})
-			.then(res => {
-				if (res && res.length) {
-					item.list = [...res]
-				}
-			})
-			.catch(err => {
-				console.log('err', err);
-			})
+
+			if (assos && assos.length) {
+				item.list = [...assos]	
+			}
+			return item
+			
 		})
 	)
-	
+
 	ctx.body = {
 		retcode: 0,
 		data: {
-			types
+			types: result
 		}
 	}
 }
